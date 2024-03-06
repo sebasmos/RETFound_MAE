@@ -19,8 +19,7 @@ from sklearn.metrics import accuracy_score, roc_auc_score, f1_score, average_pre
 from pycm import *
 import matplotlib.pyplot as plt
 import numpy as np
-
-
+from sklearn.metrics import classification_report
 
 
 def misc_measures(confusion_matrix):
@@ -186,7 +185,9 @@ def evaluate(data_loader, model, device, task, epoch, mode, num_class):
     acc, sensitivity, specificity, precision, G, F1, mcc = misc_measures(confusion_matrix)
     
     auc_roc = roc_auc_score(true_label_onehot_list, prediction_list,multi_class='ovr',average='macro')
-    auc_pr = average_precision_score(true_label_onehot_list, prediction_list,average='macro')          
+    auc_pr = average_precision_score(true_label_onehot_list, prediction_list,average='macro')   
+    
+    print(classification_report(true_label_decode_list, prediction_decode_list))
             
     metric_logger.synchronize_between_processes()
     
